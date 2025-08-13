@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central Planning - Kanooz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #FFFFFF, #2a5298, #ff8c00);
+      background-size: 400% 400%;
+      animation: gradientShift 4s ease infinite;
+      color: #333;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    header {
+      background-color: transparent;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .banner {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .banner-card {
+      background-color: rgba(255, 165, 0, 0.6);
+      padding: 10px 30px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 2.2em;
+      color: #ffffff; /* Changed color to white */
+      display: inline-block;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .column {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .column h2 {
+      color: #192a51;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      border-bottom: 2px solid #192a51;
+      padding-bottom: 5px;
+      text-align: center;
+    }
+
+    .card-row {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #192a51;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      color: white;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.1em;
+      font-weight: bold;
+      display: block;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header style="text-align:center; padding:15px;">
+    <a href="https://kanooz.com/" target="_blank" style="display:inline-block; background:white; padding:15px; border-radius:10px;">
+      <img src="https://kanooz.com/assets/images/logo.png" alt="Kanooz Logo" style="height:50px; display:block;">
+    </a>
+  </header>
+
+  <div class="banner">
+    <div class="banner-card">
+      CENTRAL PLANNING DEPARTMENT
+    </div>
+  </div>
+
+  <main>
+    <div class="row">
+      <div class="column">
+        <h2>Manpower</h2>
+        <div class="card-row">
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Project%20MP%20Time-line.xlsx?d=wfc5d765165d3488fa46bdf4f21f3213e&e=4%3a795ccfe9052b412abd248b8aaeba5470&sharingv2=true&fromShare=true&at=9">Manpower Allocation</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Manpowower%20%26%20ID%20Tracking.xlsx?d=w79d9dbbc16c74caf9c3227f972d4cfc7&e=4%3a7a79627133f74bb890030b5f7f92d3dd&sharingv2=true&fromShare=true&at=9">Manpower & ID Tracking</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/_layouts/15/Doc.aspx?sourcedoc=%7B12DCCD25-3F4E-4D88-AB8F-B051412E0356%7D&file=MASTER%20LIST%20-%20KANOOZ%20Interview%20Campaign%20Jun-25.xlsx&fromShare=true&action=default&mobileredirect=true">Masterlist Interview (Jun-25)</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/Ed9UQTqeECtBove2G28ywaUBGb6tTqu4qLv5afOUdKk5Jw?e=FCOr7n">Qiwa Rehire</a></div>
+        </div>
+      </div>
+      <div class="column">
+        <h2>Equipment</h2>
+        <div class="card-row">
+          <div class="card"><a href="#">Equipment Allocation</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/EenPC12jG7tOt7MREApRGgkBanM56BSfcE9w93InHWIIHw?e=MrPOxw&xsdata=MDV8MDJ8bmF2ZWRAa2Fub296LmNvbXxlMjMzNGJlMmQ1Y2M0MmEyYjJiOTA4ZGRhZDc1NDA1M3wxMzZiYmNmZmFhMjg0MDg0OTdiM2IwNDQyOTU5NzAyMnwwfDB8NjM4">Equipment Tracking</a></div>
+        </div>
+      </div>
+      <div class="column">
+        <h2>Other</h2>
+        <div class="card-row">
+          <div class="card"><a href="#">Coming Soon</a></div>
+          <div class="card"><a href="#">Coming Soon</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+  </footer>
+</body>
+
+</html>
