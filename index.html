@@ -1,95 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Central Planning - Kanooz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Global Reset & Typography */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
     }
-
     body {
-      background: linear-gradient(135deg, #FFFFFF, #2a5298, #ff8c00);
-      background-size: 400% 400%;
-      animation: gradientShift 4s ease infinite;
-      color: #333;
+      background: linear-gradient(135deg, #f8fafc, #e6ecf5);
+      color: #1f2937;
+      line-height: 1.6;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
+    /* Watermark Background Logo */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: url("https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8") no-repeat center;
+      background-size: 600px auto;
+      opacity: 0.05;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
 
+    /* Transparent Header with Left-Aligned Logo */
     header {
-      background-color: transparent;
-      padding: 10px 20px;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
+      padding: 20px 40px;
+      background: transparent;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
     }
-
     header img {
-      height: 40px;
-      cursor: pointer;
+      height: 140px; /* Slightly larger logo */
+      transition: transform 0.3s ease;
+    }
+    header img:hover {
+      transform: scale(1.05);
     }
 
+    /* Sticky Banner */
     .banner {
       text-align: center;
-      margin-top: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      margin-bottom: 40px;
     }
-
     .banner-card {
-      background-color: rgba(255, 165, 0, 0.6);
-      padding: 10px 30px;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 2.2em;
-      color: #ffffff; /* Changed color to white */
       display: inline-block;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin: 10px auto;
+      padding: 18px 50px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb, #f97316);
+      background-size: 200% 200%;
+      animation: bannerGradient 6s ease infinite;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 
+    @keyframes bannerGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Main Container */
     main {
       max-width: 1200px;
-      margin: 30px auto;
-      padding: 0 20px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .row {
       display: flex;
-      justify-content: space-between;
-      gap: 20px;
+      gap: 30px;
       flex-wrap: wrap;
+      justify-content: center;
     }
-
     .column {
       flex: 1;
       min-width: 300px;
     }
 
     .column h2 {
-      color: #192a51;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-      border-bottom: 2px solid #192a51;
-      padding-bottom: 5px;
       text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      border-bottom: 3px solid #2563eb;
+      padding-bottom: 6px;
     }
 
     .card-row {
@@ -97,37 +120,65 @@
       flex-direction: column;
       gap: 20px;
     }
-
     .card {
-      background-color: #192a51;
-      border-radius: 12px;
+      background: white;
+      border-radius: 14px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
     }
-
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
     }
-
     .card a {
-      text-decoration: none;
-      color: white;
-      font-size: 1.1em;
-      font-weight: bold;
       display: block;
+      text-decoration: none;
+      color: #1f2937;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .card:hover a {
+      color: #2563eb;
     }
 
+    /* Footer with Note */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #6b7280;
+      position: relative;
+      z-index: 1;
+    }
+    footer::before {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 3px;
+      margin: 0 auto 15px;
+      background: #2563eb;
+      border-radius: 10px;
+    }
+    .note {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      font-style: italic;
+    }
   </style>
 </head>
 
 <body>
-  <header style="text-align:center; padding:15px;">
-    <a href="https://kanooz.com/" target="_blank" style="display:inline-block; background:white; padding:10px; border-radius:10px;">
-      <img src="https://lh3.googleusercontent.com/d/14g26Zz9wcpoCggEcQTTG3MMvqbYrw5sw" alt="Kanooz Logo" style="height:150px; display:block;">
+  <header>
+    <a href="https://kanooz.com/" target="_blank">
+      <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Kanooz Logo">
     </a>
   </header>
 
@@ -146,7 +197,7 @@
           <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Manpowower%20%26%20ID%20Tracking.xlsx?d=w79d9dbbc16c74caf9c3227f972d4cfc7&e=4%3a7a79627133f74bb890030b5f7f92d3dd&sharingv2=true&fromShare=true&at=9">Manpower & ID Tracking</a></div>
           <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/_layouts/15/Doc.aspx?sourcedoc=%7B12DCCD25-3F4E-4D88-AB8F-B051412E0356%7D&file=MASTER%20LIST%20-%20KANOOZ%20Interview%20Campaign%20Jun-25.xlsx&fromShare=true&action=default&mobileredirect=true">Masterlist Interview (Jun-25)</a></div>
           <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/Ed9UQTqeECtBove2G28ywaUBGb6tTqu4qLv5afOUdKk5Jw?e=FCOr7n">Qiwa Rehire</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/NEW-HIRE%20VS%20RE-HIRE.xlsx?d=wca84cd50938d415faa7a4bcba87234e1&e=4%3a5ae9a1acd5bb4d8a9277efcbe9eaf42d&sharingv2=true&fromShare=true&at=9">MP Shortage (Q4-2025 & Q1-2026) </a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/NEW-HIRE%20VS%20RE-HIRE.xlsx?d=wca84cd50938d415faa7a4bcba87234e1&e=4%3a5ae9a1acd5bb4d8a9277efcbe9eaf42d&sharingv2=true&fromShare=true&at=9">MP Shortage (Q4-2025 & Q1-2026)</a></div>
         </div>
       </div>
       <div class="column">
@@ -167,7 +218,8 @@
   </main>
 
   <footer>
+    © 2025 Kanooz – Central Planning Department
+    <div class="note">Note: The above links will only work if you have a Kanooz login ID.</div>
   </footer>
 </body>
-
 </html>
