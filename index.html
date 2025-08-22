@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Central Planning - Kanooz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
-    /* Global Reset & Typography */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
+    :root{
+      --kcp-indigo:#1e3a8a;
+      --kcp-blue:#2563eb;
+      --kcp-orange:#f97316;
+      --kcp-gradient: linear-gradient(135deg, var(--kcp-indigo), var(--kcp-blue), var(--kcp-orange));
+      --kcp-border:#e5e7eb;
+      --kcp-text:#1f2937;
+      --kcp-bg:#f5f7fb; /* solid background (no banding) */
     }
+
+    /* Global Reset & Typography */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      background: linear-gradient(135deg, #f8fafc, #e6ecf5);
-      color: #1f2937;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--kcp-bg);
+      color: var(--kcp-text);
       line-height: 1.6;
       position: relative;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Watermark Background Logo */
+    /* Very subtle watermark (can remove by setting opacity:0) */
     body::before {
       content: "";
       position: fixed;
@@ -31,186 +41,170 @@
       transform: translate(-50%, -50%);
       background: url("https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8") no-repeat center;
       background-size: 600px auto;
-      opacity: 0.05;
+      opacity: 0.04;
       width: 100%;
       height: 100%;
       z-index: 0;
       pointer-events: none;
     }
 
-    /* Transparent Header with Left-Aligned Logo */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 20px 40px;
-      background: transparent;
+    /* HEADER: logo left + centered title (hide/show together) */
+    header#kcpHeader{
       position: sticky;
       top: 0;
       z-index: 1001;
+      background: transparent;
+      transition: transform .25s ease, opacity .2s ease;
+      will-change: transform, opacity;
     }
-    header img {
-      height: 140px; /* Slightly larger logo */
-      transition: transform 0.3s ease;
-    }
-    header img:hover {
-      transform: scale(1.05);
-    }
+    header#kcpHeader.is-hidden{ transform: translateY(-120%); opacity: 0; pointer-events: none; }
 
-    /* Sticky Banner */
-    .banner {
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      margin-bottom: 40px;
-    }
-    .banner-card {
-      display: inline-block;
-      margin: 10px auto;
-      padding: 18px 50px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #1e3a8a, #2563eb, #f97316);
-      background-size: 200% 200%;
-      animation: bannerGradient 6s ease infinite;
-      color: white;
-      font-size: 2rem;
-      font-weight: 700;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    @keyframes bannerGradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Main Container */
-    main {
+    .header-inner{
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .row {
+      padding: 16px 28px;
       display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .column {
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .column h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #1e3a8a;
-      border-bottom: 3px solid #2563eb;
-      padding-bottom: 6px;
-    }
-
-    .card-row {
-      display: flex;
-      flex-direction: column;
+      align-items: center;
+      position: relative;              /* enables absolute centering for the title */
       gap: 20px;
     }
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
+
+    .brand{ display: inline-flex; align-items: center; flex: 0 0 auto; }
+    .brand img{
+      height: 150px;                   /* bigger logo */
+      max-width: 100%;
+      object-fit: contain;
+      transition: transform .3s ease;
     }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+    .brand img:hover{ transform: scale(1.04); }
+
+    .title-pill{
+      position: absolute;              /* stays centered regardless of logo width */
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border-radius: 16px;
+      background: var(--kcp-gradient);
+      background-size: 200% 200%;
+      animation: kcpGrad 6s ease infinite;
+      color: #fff;
+      font-weight: 800;                /* bold */
+      font-size: clamp(18px, 2.6vw, 28px);
+      letter-spacing: .2px;
+      line-height: 1.2;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,.15);
     }
-    .card a {
-      display: block;
-      text-decoration: none;
-      color: #1f2937;
-      font-size: 1.1rem;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    .card:hover a {
-      color: #2563eb;
+    .title-icon{
+      font-size: clamp(24px, 3.2vw, 36px);  /* big icon */
+      line-height: 1;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
     }
 
-    /* Footer with Note */
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #6b7280;
-      position: relative;
-      z-index: 1;
+    @keyframes kcpGrad{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
     }
-    footer::before {
-      content: "";
-      display: block;
-      width: 80px;
-      height: 3px;
-      margin: 0 auto 15px;
-      background: #2563eb;
-      border-radius: 10px;
+
+    /* Main */
+    main { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+    .row { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+    .column { flex: 1; min-width: 300px; }
+    .column h2 {
+      text-align: center; margin-bottom: 20px; font-size: 1.6rem; font-weight: 700;
+      color: var(--kcp-indigo); border-bottom: 3px solid var(--kcp-blue); padding-bottom: 6px;
     }
-    .note {
-      margin-top: 8px;
-      font-size: 0.85rem;
-      color: #9ca3af;
-      font-style: italic;
+
+    .card-row { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Cards + gradient hover */
+    .card {
+      position: relative; background: #fff; border: 1px solid var(--kcp-border);
+      border-radius: 14px; padding: 20px; text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; overflow: hidden; z-index: 1;
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0; background: var(--kcp-gradient);
+      background-size: 200% 200%; animation: kcpGrad 8s ease infinite;
+      opacity: 0; transform: scale(1.05); transition: opacity .35s ease, transform .35s ease;
+      pointer-events: none; z-index: 0;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(0,0,0,0.15); }
+    .card:hover::before { opacity: 1; transform: scale(1); }
+    .card a {
+      position: relative; z-index: 1; display: block; text-decoration: none;
+      color: var(--kcp-text); font-size: 1.1rem; font-weight: 600; transition: color 0.3s ease;
+    }
+    .card:hover a { color: #fff; }
+
+    /* Footer */
+    footer { text-align: center; margin-top: 50px; padding: 20px; font-size: 0.9rem; color: #6b7280; position: relative; z-index: 1; }
+    footer::before { content: ""; display: block; width: 80px; height: 3px; margin: 0 auto 15px; background: var(--kcp-blue); border-radius: 10px; }
+    .note { margin-top: 8px; font-size: 0.85rem; color: #9ca3af; font-style: italic; }
+
+    /* Responsive tweaks */
+    @media (max-width: 720px){
+      .header-inner{ padding: 12px 16px; gap: 12px; }
+      .brand img{ height: 96px; }
+      .title-pill{ padding: 10px 14px; font-size: 16px; white-space: normal; text-align: center; }
+    }
+    @media (max-width: 480px){ .brand img{ height: 76px; } }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      header#kcpHeader, .card, .card::before { transition: none; animation: none; }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <a href="https://kanooz.com/" target="_blank">
-      <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Kanooz Logo">
-    </a>
-  </header>
+  <!-- HEADER (logo left + centered title) -->
+  <header id="kcpHeader">
+    <div class="header-inner">
+      <!-- Logo -->
+      <a class="brand" href="https://kanooz.com/" target="_blank" aria-label="Kanooz Home">
+        <img src="./Central Planning - Kanooz_files/Dept Logo Transparent.png" alt="Kanooz Logo">
+      </a>
 
-  <div class="banner">
-    <div class="banner-card">
-      CENTRAL PLANNING DEPARTMENT
+      <!-- Centered title with big, bold icon -->
+      <h1 class="title-pill" role="heading" aria-level="1">
+        <span class="title-icon" aria-hidden="true"></span>
+        <span class="title-text">CENTRAL PLANNING DEPARTMENT</span>
+      </h1>
     </div>
-  </div>
+  </header>
 
   <main>
     <div class="row">
       <div class="column">
         <h2>Manpower</h2>
         <div class="card-row">
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Deployment.xlsx?d=w6356b06acd5a4020a70723a0ce231ab9&e=4%3a1edbc5bb80c943faa3a4f9f57e47a708&sharingv2=true&fromShare=true&at=9">Manpower Deployment & Shortage</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Manpowower%20%26%20ID%20Tracking.xlsx?d=w79d9dbbc16c74caf9c3227f972d4cfc7&e=4%3a7a79627133f74bb890030b5f7f92d3dd&sharingv2=true&fromShare=true&at=9">Manpower & ID Tracking</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/_layouts/15/Doc.aspx?sourcedoc=%7B12DCCD25-3F4E-4D88-AB8F-B051412E0356%7D&file=MASTER%20LIST%20-%20KANOOZ%20Interview%20Campaign%20Jun-25.xlsx&fromShare=true&action=default&mobileredirect=true">Interview Campaign (Jun-25)</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Deployment.xlsx?d=w6356b06acd5a4020a70723a0ce231ab9&amp;e=4%3a1edbc5bb80c943faa3a4f9f57e47a708&amp;sharingv2=true&amp;fromShare=true&amp;at=9">Manpower Deployment &amp; Shortage</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Manpowower%20%26%20ID%20Tracking.xlsx?d=w79d9dbbc16c74caf9c3227f972d4cfc7&amp;e=4%3a7a79627133f74bb890030b5f7f92d3dd&amp;sharingv2=true&amp;fromShare=true&amp;at=9">Manpower &amp; ID Tracking</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/_layouts/15/Doc.aspx?sourcedoc=%7B12DCCD25-3F4E-4D88-AB8F-B051412E0356%7D&amp;file=MASTER%20LIST%20-%20KANOOZ%20Interview%20Campaign%20Jun-25.xlsx&amp;fromShare=true&amp;action=default&amp;mobileredirect=true">Interview Campaign (Jun-25)</a></div>
           <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/Ed9UQTqeECtBove2G28ywaUBGb6tTqu4qLv5afOUdKk5Jw?e=FCOr7n">Qiwa Rehire</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/NEW-HIRE%20VS%20RE-HIRE.xlsx?d=wca84cd50938d415faa7a4bcba87234e1&e=4%3a5ae9a1acd5bb4d8a9277efcbe9eaf42d&sharingv2=true&fromShare=true&at=9">MP Shortage (Q4-2025 & Q1-2026)</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/NEW-HIRE%20VS%20RE-HIRE.xlsx?d=wca84cd50938d415faa7a4bcba87234e1&amp;e=4%3a5ae9a1acd5bb4d8a9277efcbe9eaf42d&amp;sharingv2=true&amp;fromShare=true&amp;at=9">MP Shortage (Q4-2025 &amp; Q1-2026)</a></div>
         </div>
       </div>
+
       <div class="column">
         <h2>Equipment</h2>
         <div class="card-row">
-          <div class="card"><a href="#">Equipment Deployment & Shortage</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/EenPC12jG7tOt7MREApRGgkBanM56BSfcE9w93InHWIIHw?e=MrPOxw&xsdata=MDV8MDJ8bmF2ZWRAa2Fub296LmNvbXxlMjMzNGJlMmQ1Y2M0MmEyYjJiOTA4ZGRhZDc1NDA1M3wxMzZiYmNmZmFhMjg0MDg0OTdiM2IwNDQyOTU5NzAyMnwwfDB8NjM4">Equipment Tracking</a></div>
+          <div class="card"><a href="https://kanoozcp.github.io/#">Equipment Deployment &amp; Shortage</a></div>
+          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/EenPC12jG7tOt7MREApRGgkBanM56BSfcE9w93InHWIIHw?e=MrPOxw&amp;xsdata=MDV8MDJ8bmF2ZWRAa2Fub296LmNvbXxlMjMzNGJlMmQ1Y2M0MmEyYjJiOTA4ZGRhZDc1NDA1M3wxMzZiYmNmZmFhMjg0MDg0OTdiM2IwNDQyOTU5NzAyMnwwfDB8NjM4">Equipment Tracking</a></div>
         </div>
       </div>
+
       <div class="column">
         <h2>Other</h2>
         <div class="card-row">
-          <div class="card"><a href="#">AI Assistant</a></div>
+          <div class="card"><a href="https://kanoozcp.github.io/#">Coming Soon</a></div>
         </div>
       </div>
     </div>
@@ -220,10 +214,266 @@
     © 2025 Kanooz – Central Planning Department
     <div class="note">Note: The above links will only work if you have a Kanooz login ID.</div>
   </footer>
+
+  <!-- Hide header (logo + title) on scroll DOWN; show on scroll UP -->
+  <script>
+    (function(){
+      const header = document.getElementById('kcpHeader');
+      let lastY = window.scrollY || 0;
+      const THRESHOLD = 6;
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY || 0;
+        if (y - lastY > THRESHOLD) header.classList.add('is-hidden');       // down
+        else if (lastY - y > THRESHOLD || y < 10) header.classList.remove('is-hidden'); // up or top
+        lastY = y;
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- KANOOZ AI Assistant: Bubble Chat Widget (gradient border, “Ask AI” hint, new send icon) -->
+  <style>
+    :root{
+      --chat-radius:14px; --chat-w:380px; --chat-h:560px;
+      --chat-user:#eaf1ff; --chat-ai:#ffffff;
+    }
+    #kzChatRoot{ position:fixed; inset:0; pointer-events:none; z-index:2147483647; font-family:'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    #kzBackdrop{ position:absolute; inset:0; background:rgba(2,6,23,.10); backdrop-filter: blur(1px); opacity:0; visibility:hidden; transition:opacity .18s ease; }
+
+    /* Floating button */
+    #kzBtn{
+      position:absolute; right:20px; bottom:20px; width:56px; height:56px; border:0; border-radius:50%;
+      background: var(--kcp-gradient); background-size:200% 200%; color:#fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25); cursor:pointer;
+      pointer-events:auto; display:flex; align-items:center; justify-content:center;
+      animation: kcpGrad 8s ease infinite;
+    }
+    #kzBtn svg{ width:26px; height:26px; }
+
+    /* "Ask AI" hint (disappears after first click) */
+    #kzHint{
+      position:absolute; right:20px; bottom:86px; /* just above the button for visibility */
+      background: var(--kcp-gradient); background-size:200% 200%;
+      color:#fff; font-weight:700; font-size:12px; letter-spacing:.2px;
+      padding:6px 10px; border-radius:999px; box-shadow:0 8px 24px rgba(0,0,0,.18);
+      animation: kcpGrad 8s ease infinite;
+      pointer-events:none; transition: opacity .2s ease, transform .2s ease;
+    }
+    #kzHint.kz-hidden{ opacity:0; transform: translateY(6px) scale(.98); }
+
+    /* Chat panel with gradient border */
+    #kzPanel{
+      position:absolute; right:20px; bottom:calc(20px + 56px + 14px);
+      width:var(--chat-w); max-width:94vw; height:var(--chat-h); max-height:80vh;
+      border-radius:var(--chat-radius);
+      border:2px solid transparent;
+      background:
+        linear-gradient(#fff,#fff) padding-box,
+        var(--kcp-gradient) border-box;
+      background-size:auto, 200% 200%;
+      animation: kcpGrad 8s ease infinite;
+      overflow:hidden; box-shadow:0 25px 60px rgba(0,0,0,.20);
+
+      transform-origin:100% 100%; transform:translateY(16px) scale(.98);
+      opacity:0; visibility:hidden; pointer-events:none;
+      transition:transform .26s cubic-bezier(.2,.8,.2,1), opacity .18s ease, visibility 0s .26s;
+    }
+    #kzHeader{
+      height:48px; display:flex; align-items:center; gap:8px; padding:0 12px;
+      color:#fff; background: var(--kcp-gradient); background-size:200% 200%;
+      animation: kcpGrad 8s ease infinite; border-bottom:1px solid rgba(255,255,255,.15);
+    }
+    #kzTitle{ font-weight:700; font-size:14px; letter-spacing:.2px; text-shadow:0 1px 1px rgba(0,0,0,.15); }
+    #kzClose{ margin-left:auto; background:transparent; border:0; color:#fff; font-size:22px; line-height:1; cursor:pointer; }
+
+    #kzBody{ display:flex; flex-direction:column; height:calc(100% - 48px); background:#fff; }
+    #kzMsgs{ flex:1; overflow:auto; padding:16px 12px; background:#fff; } /* solid, no gradient */
+
+    .kz-msg{ display:flex; align-items:flex-end; gap:8px; margin:8px 10px; }
+    .kz-msg.ai{ justify-content:flex-start; }
+    .kz-msg.user{ justify-content:flex-end; }
+    .kz-avatar{ width:28px; height:28px; border-radius:50%; background:var(--kcp-indigo); color:#fff; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.08); }
+    .kz-avatar.user{ background:var(--kcp-blue); }
+    .kz-bubble{
+      max-width:75%; padding:10px 12px; border-radius:12px; line-height:1.45; font-size:14px; color:var(--kcp-text);
+      box-shadow:0 2px 10px rgba(0,0,0,.06); white-space:pre-wrap; overflow-wrap:anywhere; border:1px solid var(--kcp-border);
+      background:#fff;
+    }
+    .kz-msg.ai .kz-bubble{ background:var(--chat-ai); border-bottom-left-radius:6px; }
+    .kz-msg.user .kz-bubble{ background:var(--chat-user); border-bottom-right-radius:6px; }
+    .kz-bubble a{ color:var(--kcp-blue); text-decoration:underline; }
+
+    .kz-typing{ display:flex; gap:4px; align-items:center; }
+    .kz-typing .dot{ width:6px; height:6px; border-radius:50%; background:var(--kcp-blue); opacity:.4; animation:kzBlink 1s infinite; }
+    .kz-typing .dot:nth-child(2){ animation-delay:.15s; } .kz-typing .dot:nth-child(3){ animation-delay:.3s; }
+    @keyframes kzBlink{ 0%,100%{opacity:.3;transform:translateY(0)} 50%{opacity:1;transform:translateY(-2px)} }
+
+    #kzInputBar{ display:flex; gap:8px; padding:10px; border-top:1px solid var(--kcp-border); background:#fff; }
+    #kzInput{ flex:1; min-height:40px; max-height:120px; resize:none; border:1px solid var(--kcp-border); border-radius:10px; padding:10px 12px; font-size:14px; outline:none; background:#fff; }
+    #kzInput:focus{ border-color:var(--kcp-blue); box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+
+    /* Send button (arrow + sparkles) */
+    #kzSend{
+      width:46px; height:40px; border:0; border-radius:10px;
+      background:var(--kcp-gradient); background-size:200% 200%; color:#fff; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 6px 16px rgba(37,99,235,.25); animation: kcpGrad 8s ease infinite;
+    }
+    #kzSend:disabled{ opacity:.65; cursor:not-allowed; box-shadow:none; }
+    #kzSend svg{ width:22px; height:22px; }
+
+    .kz-open #kzBackdrop{ opacity:1; visibility:visible; pointer-events:auto; }
+    .kz-open #kzPanel{ transform:translateY(0) scale(1); opacity:1; visibility:visible; pointer-events:auto; transition-delay:0s; }
+    .kz-open #kzHint{ display:none; }
+
+    @media (max-width:640px){
+      #kzPanel{ right:0; left:0; bottom:0; width:100vw; height:80vh; border-radius:12px 12px 0 0; transform-origin:50% 100%; }
+      #kzBtn{ right:12px; bottom:12px; }
+      #kzHint{ right:12px; bottom:78px; }
+    }
+  </style>
+
+  <div id="kzChatRoot" aria-live="polite">
+    <div id="kzBackdrop" aria-hidden="true"></div>
+
+    <button id="kzBtn" aria-label="Open chat" aria-expanded="false" title="Chat with KANOOZ AI Assistant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z"/>
+      </svg>
+    </button>
+    <div id="kzHint">Ask AI</div>
+
+    <div id="kzPanel" role="dialog" aria-modal="true" aria-label="KANOOZ AI Assistant">
+      <div id="kzHeader">
+        <div id="kzTitle">KANOOZ AI Assistant</div>
+        <button id="kzClose" aria-label="Close">×</button>
+      </div>
+
+      <div id="kzBody">
+        <div id="kzMsgs" aria-live="polite" aria-relevant="additions"></div>
+
+        <form id="kzInputBar">
+          <textarea id="kzInput" placeholder="Type your message..." rows="1"></textarea>
+          <button id="kzSend" type="submit" aria-label="Send">
+            <!-- Arrow + sparkles send icon -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="6" cy="6" r="1.2" fill="#fff" opacity=".95"/>
+              <circle cx="9.5" cy="4.5" r="0.9" fill="#fff" opacity=".9"/>
+              <circle cx="7.5" cy="9" r="0.9" fill="#fff" opacity=".9"/>
+              <path d="M6 18 L18 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M9 6h9v9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Chat widget logic (Space API + dismissible “Ask AI”)
+    (function(){
+      const API = "https://kcpai-kcpaiassistant.hf.space/api/chat"; // Ensure your Space exposes POST /api/chat
+      const root = document.getElementById("kzChatRoot");
+      const btn = document.getElementById("kzBtn");
+      const panel = document.getElementById("kzPanel");
+      const backdrop = document.getElementById("kzBackdrop");
+      const closeBtn = document.getElementById("kzClose");
+      const msgs = document.getElementById("kzMsgs");
+      const form = document.getElementById("kzInputBar");
+      const input = document.getElementById("kzInput");
+      const sendBtn = document.getElementById("kzSend");
+      const hint = document.getElementById("kzHint");
+
+      const OPEN_KEY = "kzChatOpen";
+      const HIST_KEY = "kzChatHistory";
+      const HINT_KEY = "kzHintDismissed";
+
+      if (localStorage.getItem(HINT_KEY) === "1") hint.classList.add("kz-hidden");
+
+      let history = [];
+      try { history = JSON.parse(localStorage.getItem(HIST_KEY) || "[]"); } catch(e){}
+
+      function saveHistory(){ localStorage.setItem(HIST_KEY, JSON.stringify(history.slice(-20))); }
+      function dismissHint(permanent){
+        if (!hint) return;
+        hint.classList.add("kz-hidden");
+        if (permanent) localStorage.setItem(HINT_KEY, "1");
+      }
+      function openChat(){
+        root.classList.add("kz-open");
+        btn.setAttribute("aria-expanded","true");
+        localStorage.setItem(OPEN_KEY, "1");
+        dismissHint(true);
+        if (!msgs.dataset.rendered) { renderHistory(); msgs.dataset.rendered = "1"; }
+      }
+      function closeChat(){
+        root.classList.remove("kz-open");
+        btn.setAttribute("aria-expanded","false");
+        localStorage.setItem(OPEN_KEY, "0");
+      }
+      function scrollToBottom(){ msgs.scrollTop = msgs.scrollHeight; }
+
+      function renderBubble(role, text){
+        const wrap = document.createElement("div");
+        wrap.className = "kz-msg " + (role === "user" ? "user" : "ai");
+        const avatar = document.createElement("div");
+        avatar.className = "kz-avatar " + (role === "user" ? "user" : "ai");
+        avatar.textContent = role === "user" ? "U" : "AI";
+        const bubble = document.createElement("div");
+        bubble.className = "kz-bubble";
+        bubble.textContent = text;
+        wrap.appendChild(role === "user" ? bubble : avatar);
+        wrap.appendChild(role === "user" ? avatar : bubble);
+        msgs.appendChild(wrap);
+      }
+      function addMsg(role, text){ history.push({role, content:text}); renderBubble(role, text); saveHistory(); scrollToBottom(); }
+      function renderHistory(){
+        msgs.innerHTML = "";
+        if (!history.length){
+          addMsg("assistant","Hi! I’m the KANOOZ AI Assistant. How can I help today?");
+          return;
+        }
+        history.forEach(m => renderBubble(m.role, m.content));
+        scrollToBottom();
+      }
+
+      function showTyping(){
+        const wrap = document.createElement("div"); wrap.className="kz-msg ai"; wrap.id="kzTyping";
+        const avatar = document.createElement("div"); avatar.className="kz-avatar ai"; avatar.textContent="AI";
+        const bubble = document.createElement("div"); bubble.className="kz-bubble";
+        const dots = document.createElement("div"); dots.className="kz-typing"; dots.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+        bubble.appendChild(dots); wrap.appendChild(avatar); wrap.appendChild(bubble); msgs.appendChild(wrap); scrollToBottom();
+      }
+      function hideTyping(){ const t=document.getElementById("kzTyping"); if(t) t.remove(); }
+
+      async function send(message){
+        sendBtn.disabled = true; showTyping();
+        try{
+          const res = await fetch(API, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ message, history }) });
+          const data = await res.json(); hideTyping();
+          if(!res.ok || !data || !data.reply){ addMsg("assistant","Sorry, I couldn’t get a response. Please try again."); }
+          else { addMsg("assistant", data.reply.trim()); }
+        }catch(e){ hideTyping(); addMsg("assistant","Network error. Please try again."); }
+        finally{ sendBtn.disabled = false; }
+      }
+
+      btn.addEventListener("click", ()=> root.classList.contains("kz-open") ? closeChat() : openChat());
+      closeBtn.addEventListener("click", closeChat);
+      backdrop.addEventListener("click", closeChat);
+      document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeChat(); });
+
+      form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        const text = input.value.trim(); if(!text) return;
+        addMsg("user", text); input.value=""; input.style.height="40px"; send(text);
+      });
+
+      input.addEventListener("input", ()=>{ input.style.height="40px"; input.style.height=Math.min(input.scrollHeight,120)+"px"; });
+      input.addEventListener("keydown", e=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); form.requestSubmit(); } });
+
+      if (localStorage.getItem(OPEN_KEY) === "1") { openChat(); }
+    })();
+  </script>
+  <!-- /KANOOZ AI Assistant -->
 </body>
 </html>
-
-
-
-
-
