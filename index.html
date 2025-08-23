@@ -16,11 +16,9 @@
       --kcp-gradient: linear-gradient(135deg, var(--kcp-indigo), var(--kcp-blue), var(--kcp-orange));
       --kcp-border:#e5e7eb;
       --kcp-text:#1f2937;
-      /* Page background now pure white */
       --kcp-bg:#ffffff;
     }
 
-    /* Base */
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -33,19 +31,17 @@
       position:relative;
     }
 
-    /* Watermark disabled to keep background pure white */
     body::before{
       content:"";
       position:fixed;
       inset:0;
       background:url("https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8") no-repeat center 45%;
       background-size:600px auto;
-      opacity:0; /* was .04 */
+      opacity:0;
       pointer-events:none;
       z-index:0;
     }
 
-    /* HEADER: logo left + centered title; both hide/show together */
     header#kcpHeader{
       position:sticky; top:0; z-index:1001; background:transparent;
       transition:transform .25s ease, opacity .2s ease;
@@ -74,7 +70,6 @@
 
     @keyframes kcpGrad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-    /* Main layout */
     main{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1}
     .row{display:flex;gap:30px;flex-wrap:wrap;justify-content:center}
     .column{flex:1;min-width:300px}
@@ -84,7 +79,6 @@
     }
     .card-row{display:flex;flex-direction:column;gap:20px}
 
-    /* Cards with gradient hover overlay */
     .card{
       position:relative;background:#fff;border:1px solid var(--kcp-border);
       border-radius:14px;padding:20px;text-align:center;cursor:pointer;
@@ -101,12 +95,10 @@
     .card a{position:relative;z-index:1;display:block;text-decoration:none;color:var(--kcp-text);font-size:1.1rem;font-weight:600;transition:color .3s ease}
     .card:hover a{color:#fff}
 
-    /* Footer */
     footer{text-align:center;margin-top:50px;padding:20px;font-size:.9rem;color:#6b7280;position:relative;z-index:1}
     footer::before{content:"";display:block;width:80px;height:3px;margin:0 auto 15px;background:var(--kcp-blue);border-radius:10px}
     .note{margin-top:8px;font-size:.85rem;color:#9ca3af;font-style:italic}
 
-    /* Responsive */
     @media (max-width:720px){
       .header-inner{padding:12px 16px;gap:12px}
       .brand img{height:96px}
@@ -114,7 +106,6 @@
     }
     @media (max-width:480px){.brand img{height:76px}}
 
-    /* Reduced motion */
     @media (prefers-reduced-motion:reduce){
       header#kcpHeader,.card,.card::before{animation:none;transition:none}
     }
@@ -126,11 +117,11 @@
   <header id="kcpHeader">
     <div class="header-inner">
       <a class="brand" href="https://kanooz.com/" target="_blank" aria-label="Kanooz Home">
-        <img src="./Central Planning - Kanooz_files/Dept Logo Transparent.png" alt="Kanooz Logo" />
+        <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Kanooz Logo" />
       </a>
 
       <h1 class="title-pill" role="heading" aria-level="1">
-        <span class="title-icon" aria-hidden="true">⚙️</span>
+        <span class="title-icon" aria-hidden="true"></span>
         <span class="title-text">CENTRAL PLANNING DEPARTMENT</span>
       </h1>
     </div>
@@ -161,7 +152,7 @@
       <div class="column">
         <h2>Other</h2>
         <div class="card-row">
-          <div class="card"><a href="https://app--kanooz-operations-ai-assistant-20a7ca1b.base44.app/">AI Assistant</a></div>
+          <div class="card"><a href="https://kanoozcp.github.io/#">AI Assistant</a></div>
         </div>
       </div>
     </div>
@@ -185,262 +176,6 @@
         lastY = y;
       }, { passive:true });
     })();
-  </script>
-
-  <!-- Shadow-DOM isolated AI widget (API-only; no iframe, no Gemini banner) -->
-  <script>
-  (() => {
-    const API_BASE = "https://kcpai-kcpaiassistant.hf.space";
-    const CHAT_URL = API_BASE + "/api/chat";
-
-    // Read Kanooz theme colors from page vars
-    const cs = getComputedStyle(document.documentElement);
-    const primary   = cs.getPropertyValue('--kcp-indigo').trim() || '#1e3a8a';
-    const secondary = cs.getPropertyValue('--kcp-blue').trim()   || '#2563eb';
-    const accent    = cs.getPropertyValue('--kcp-orange').trim() || '#f97316';
-
-    // Host + Shadow root (isolated)
-    const host = document.createElement("div");
-    host.id = "ka-widget-host";
-    document.body.appendChild(host);
-    const sr = host.attachShadow({ mode:"open" });
-
-    // Pass theme variables
-    const setVar = (k,v)=>host.style.setProperty(k,v);
-    setVar('--ka-primary',  primary);
-    setVar('--ka-secondary',secondary);
-    setVar('--ka-accent',   accent);
-    setVar('--ka-w',        '420px');
-    setVar('--ka-h',        '600px');
-    setVar('--ka-radius',   '16px');
-    setVar('--ka-btn',      '60px');
-    setVar('--ka-x',        '20px');
-    setVar('--ka-y',        '20px');
-    setVar('--ka-z',        '2147483647');
-    host.setAttribute('data-pos', 'br'); // br | bl
-
-    sr.innerHTML = `
-      <style>
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap");
-        :host { all: initial; }
-        :host, * { box-sizing: border-box; }
-        :host{ --ka-grad: linear-gradient(135deg, var(--ka-primary), var(--ka-secondary), var(--ka-accent)); }
-
-        #kaRoot{ position:fixed; inset:0; pointer-events:none; z-index:var(--ka-z);
-                 font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
-        #kaBackdrop{ position:absolute; inset:0; background:rgba(2,6,23,.10); backdrop-filter:blur(1px);
-                     opacity:0; visibility:hidden; transition:opacity .18s ease; }
-
-        #kaBtn{
-          position:absolute; bottom:var(--ka-y); width:var(--ka-btn); height:var(--ka-btn);
-          border:0; border-radius:50%; background:var(--ka-grad); background-size:200% 200%; color:#fff; cursor:pointer;
-          pointer-events:auto; display:flex; align-items:center; justify-content:center;
-          box-shadow:0 10px 30px rgba(0,0,0,.25); animation:kaGrad 8s ease infinite;
-          right:var(--ka-x);
-        }
-        :host([data-pos="bl"]) #kaBtn{ left:var(--ka-x); right:auto; }
-        #kaBtn svg{ width:26px; height:26px }
-
-        #kaHint{
-          position:absolute; bottom:calc(var(--ka-y) + var(--ka-btn) + 10px);
-          background:var(--ka-grad); background-size:200% 200%;
-          color:#fff; font-weight:700; font-size:12px; letter-spacing:.2px; padding:6px 10px; border-radius:999px;
-          box-shadow:0 8px 24px rgba(0,0,0,.18); pointer-events:none; animation:kaGrad 8s ease infinite;
-          transition:opacity .2s ease, transform .2s ease;
-          right:var(--ka-x);
-        }
-        :host([data-pos="bl"]) #kaHint{ left:var(--ka-x); right:auto; }
-        #kaHint.ka-hide{ opacity:0; transform:translateY(6px) scale(.98); }
-
-        #kaPanel{
-          position:absolute; bottom:calc(var(--ka-y) + var(--ka-btn) + 14px);
-          width:var(--ka-w); max-width:94vw; height:var(--ka-h); max-height:80vh; border-radius:var(--ka-radius);
-          border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, var(--ka-grad) border-box;
-          background-size:auto,200% 200%; animation:kaGrad 8s ease infinite;
-          overflow:hidden; box-shadow:0 25px 60px rgba(0,0,0,.20);
-          transform-origin:100% 100%; transform:translateY(16px) scale(.98);
-          opacity:0; visibility:hidden; pointer-events:none;
-          transition:transform .26s cubic-bezier(.2,.8,.2,1), opacity .18s ease, visibility 0s .26s;
-          right:var(--ka-x);
-        }
-        :host([data-pos="bl"]) #kaPanel{ left:var(--ka-x); right:auto; }
-
-        #kaHeader{
-          height:48px; display:flex; align-items:center; gap:8px; padding:0 12px; color:#fff;
-          background:var(--ka-grad); background-size:200% 200%; animation:kaGrad 8s ease infinite;
-          border-bottom:1px solid rgba(255,255,255,.15);
-        }
-        #kaTitle{ font-weight:700; font-size:14px; letter-spacing:.2px; text-shadow:0 1px 1px rgba(0,0,0,.15); }
-        #kaClose{ margin-left:auto; background:transparent; border:0; color:#fff; font-size:22px; line-height:1; cursor:pointer; pointer-events:auto; }
-
-        #kaBody{ position:relative; display:flex; flex-direction:column; height:calc(100% - 48px); background:#fff }
-        #kaMsgs{ flex:1; overflow:auto; padding:16px 12px; background:#fff; }
-        .ka-msg{ display:flex; align-items:flex-end; gap:8px; margin:8px 10px; }
-        .ka-msg.ai{ justify-content:flex-start; }
-        .ka-msg.user{ justify-content:flex-end; }
-        .ka-avatar{ width:28px; height:28px; border-radius:50%; background:var(--ka-primary); color:#fff; font-size:12px;
-                    display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.08); }
-        .ka-avatar.user{ background:var(--ka-secondary); }
-        .ka-bubble{
-          max-width:75%; padding:10px 12px; border-radius:12px; line-height:1.45; font-size:14px; color:#1f2937;
-          box-shadow:0 2px 10px rgba(0,0,0,.06); white-space:pre-wrap; overflow-wrap:anywhere; border:1px solid #e5e7eb; background:#fff;
-        }
-        .ka-msg.ai .ka-bubble{ background:#fff; border-bottom-left-radius:6px; }
-        .ka-msg.user .ka-bubble{ background:#eaf1ff; border-bottom-right-radius:6px; }
-
-        #kaBar{ display:flex; gap:8px; padding:10px; border-top:1px solid #e5e7eb; background:#fff; }
-        #kaInput{ flex:1; min-height:40px; max-height:120px; resize:none; border:1px solid #e5e7eb; border-radius:10px; padding:10px 12px; font-size:14px; outline:none; background:#fff; }
-        #kaInput:focus{ border-color:var(--ka-secondary); box-shadow:0 0 0 3px rgba(37,99,235,.15); }
-        #kaSend{
-          width:46px; height:40px; border:0; border-radius:10px; background:var(--ka-grad); background-size:200% 200%; color:#fff; cursor:pointer;
-          display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(37,99,235,.25); animation:kaGrad 8s ease infinite;
-        }
-        #kaSend:disabled{ opacity:.65; cursor:not-allowed; box-shadow:none; }
-        #kaSend svg{ width:22px; height:22px; }
-
-        .ka-open #kaBackdrop{ opacity:1; visibility:visible; pointer-events:auto; }
-        .ka-open #kaPanel{ transform:translateY(0) scale(1); opacity:1; visibility:visible; pointer-events:auto; transition-delay:0s; }
-
-        @keyframes kaGrad{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-
-        @media (max-width:640px){
-          #kaPanel{ right:auto; left:0; bottom:0; width:100vw; height:80vh; border-radius:12px 12px 0 0; transform-origin:50% 100%; }
-          #kaBtn{ width:56px; height:56px; }
-        }
-        @media (prefers-reduced-motion:reduce){ #kaBtn,#kaPanel,#kaHeader,#kaHint{ animation:none; transition:none; } }
-      </style>
-
-      <div id="kaRoot" aria-live="polite">
-        <div id="kaBackdrop" aria-hidden="true"></div>
-
-        <button id="kaBtn" aria-label="Open chat" aria-expanded="false" title="Chat with KANOOZ AI Assistant">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z"></path></svg>
-        </button>
-        <div id="kaHint">Ask AI</div>
-
-        <div id="kaPanel" role="dialog" aria-modal="true" aria-label="KANOOZ AI Assistant">
-          <div id="kaHeader">
-            <div id="kaTitle">KANOOZ AI Assistant</div>
-            <button id="kaClose" aria-label="Close">×</button>
-          </div>
-          <div id="kaBody">
-            <div id="kaMsgs" aria-live="polite" aria-relevant="additions"></div>
-            <form id="kaBar">
-              <textarea id="kaInput" placeholder="Type your message..." rows="1"></textarea>
-              <button id="kaSend" type="submit" aria-label="Send">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <circle cx="6" cy="6" r="1.2" fill="#fff" opacity=".95"></circle>
-                  <circle cx="9.5" cy="4.5" r="0.9" fill="#fff" opacity=".9"></circle>
-                  <circle cx="7.5" cy="9" r="0.9" fill="#fff" opacity=".9"></circle>
-                  <path d="M6 18 L18 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"></path>
-                  <path d="M9 6h9v9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Shadow DOM helpers
-    const $ = (sel)=>sr.querySelector(sel);
-    const root=$("#kaRoot");
-    const btn=$("#kaBtn");
-    const back=$("#kaBackdrop");
-    const closeBtn=$("#kaClose");
-    const msgs=$("#kaMsgs");
-    const form=$("#kaBar");
-    const input=$("#kaInput");
-    const send=$("#kaSend");
-    const hint=$("#kaHint");
-
-    const OPEN_KEY="kaOpen", HIST_KEY="kaHist", HINT_KEY="kaHintDismissed";
-    let history=[]; try{ history = JSON.parse(localStorage.getItem(HIST_KEY) || "[]"); }catch{}
-
-    function saveHist(){ localStorage.setItem(HIST_KEY, JSON.stringify(history.slice(-20))); }
-    function scrollBottom(){ msgs.scrollTop = msgs.scrollHeight; }
-    function bubble(role,text){
-      const wrap = document.createElement("div"); wrap.className = "ka-msg " + (role==="user"?"user":"ai");
-      const avatar=document.createElement("div"); avatar.className="ka-avatar " + (role==="user"?"user":"ai"); avatar.textContent=role==="user"?"U":"AI";
-      const b=document.createElement("div"); b.className="ka-bubble"; b.textContent=text;
-      wrap.appendChild(role==="user"?b:avatar); wrap.appendChild(role==="user"?avatar:b); msgs.appendChild(wrap);
-    }
-    function addMsg(role,text){ history.push({role, content:text}); bubble(role,text); saveHist(); scrollBottom(); }
-    function renderHist(){
-      msgs.innerHTML=""; if(!history.length){ addMsg("assistant","Hi! I’m the KANOOZ AI Assistant. How can I help today?"); return; }
-      history.forEach(m=>bubble(m.role,m.content)); scrollBottom();
-    }
-    function typingShow(text="…"){
-      const wrap=document.createElement("div"); wrap.className="ka-msg ai"; wrap.id="kaTyping";
-      const avatar=document.createElement("div"); avatar.className="ka-avatar ai"; avatar.textContent="AI";
-      const b=document.createElement("div"); b.className="ka-bubble"; b.textContent=text;
-      wrap.appendChild(avatar); wrap.appendChild(b); msgs.appendChild(wrap); scrollBottom();
-    }
-    function typingHide(){ const t=sr.getElementById("kaTyping"); if(t) t.remove(); }
-    function typingSet(text){ const t=sr.getElementById("kaTyping"); if(t){ const b=t.querySelector(".ka-bubble"); if(b) b.textContent=text; } }
-
-    async function fetchJSON(url, payload, timeoutMs=60000){
-      const ctrl=new AbortController(); const timer=setTimeout(()=>ctrl.abort(), timeoutMs);
-      try{
-        const res=await fetch(url, { method:"POST", mode:"cors", cache:"no-store", credentials:"omit",
-          headers:{ "Content-Type":"application/json", "Accept":"application/json" },
-          body: JSON.stringify(payload), signal: ctrl.signal });
-        const text=await res.text(); let data=null; try{ data=JSON.parse(text); }catch{}
-        return { ok:res.ok, status:res.status, data, text };
-      } finally{ clearTimeout(timer); }
-    }
-
-    // API-first with persistent retry (no iframe fallback)
-    async function sendMsg(message){
-      send.disabled=true; typingShow("Thinking…");
-      const payload={ message, history };
-      const deadline=Date.now()+120000; let attempt=0;
-
-      while(Date.now()<deadline){
-        attempt++;
-        try{
-          const r=await fetchJSON(CHAT_URL, payload, 60000);
-          if(r.ok && r.data && typeof r.data.reply==="string"){
-            typingHide(); addMsg("assistant", r.data.reply.trim()); send.disabled=false; return;
-          }else{ console.warn("Attempt",attempt,"status/body:", r.status, r.text); }
-        }catch(e){ console.warn("Attempt",attempt,"network error:", e); }
-        const pause=Math.min(8000, attempt<3 ? 1000*attempt : 2000 + 1000*(attempt-2));
-        typingSet(`Warming up AI… attempt ${attempt}. Retrying in ${Math.round(pause/1000)}s`);
-        await new Promise(r=>setTimeout(r,pause));
-      }
-      typingHide(); addMsg("assistant","Still starting up. Please try again shortly, or open: https://kcpai-kcpaiassistant.hf.space/");
-      send.disabled=false;
-    }
-
-    function openChat(){
-      root.classList.add("ka-open"); root.style.pointerEvents="auto";
-      btn.setAttribute("aria-expanded","true");
-      localStorage.setItem(OPEN_KEY,"1");
-      if(localStorage.getItem(HINT_KEY)!=="1"){ hint.classList.add("ka-hide"); localStorage.setItem(HINT_KEY,"1"); }
-      if(!msgs.dataset.rendered){ renderHist(); msgs.dataset.rendered="1"; }
-    }
-    function closeChat(){
-      root.classList.remove("ka-open"); root.style.pointerEvents="none";
-      btn.setAttribute("aria-expanded","false");
-      localStorage.setItem(OPEN_KEY,"0");
-    }
-
-    btn.addEventListener("click", ()=> root.classList.contains("ka-open") ? closeChat() : openChat());
-    closeBtn.addEventListener("click", closeChat);
-    back.addEventListener("click", closeChat);
-    document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeChat(); }, true);
-
-    form.addEventListener("submit", (e)=>{
-      e.preventDefault();
-      const text=input.value.trim(); if(!text) return;
-      addMsg("user", text); input.value=""; input.style.height="40px"; sendMsg(text);
-    });
-    input.addEventListener("input", ()=>{ input.style.height="40px"; input.style.height=Math.min(input.scrollHeight,120)+"px"; });
-    input.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); form.requestSubmit(); } });
-
-    if(localStorage.getItem(HINT_KEY)==="1") hint.classList.add("ka-hide");
-    if(localStorage.getItem(OPEN_KEY)==="1") openChat();
-  })();
   </script>
 </body>
 </html>
