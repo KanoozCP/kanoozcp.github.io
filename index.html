@@ -1,194 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Central Planning - Kanooz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Planning Portal - Kanooz</title>
+    
+    <!-- Modern Font Inter & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tailwind CSS 4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --kcp-indigo: #1e3a8a;
+            --kcp-blue: #2563eb;
+            --kcp-orange: #f97316;
+            --kcp-gradient: linear-gradient(135deg, #1e3a8a, #2563eb, #f97316);
+        }
 
-  <style>
-    :root{
-      --kcp-indigo:#1e3a8a;
-      --kcp-blue:#2563eb;
-      --kcp-orange:#f97316;
-      --kcp-gradient: linear-gradient(135deg, var(--kcp-indigo), var(--kcp-blue), var(--kcp-orange));
-      --kcp-border:#e5e7eb;
-      --kcp-text:#1f2937;
-      --kcp-bg:#ffffff;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            min-height: 100vh;
+        }
 
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      font-family:'Poppins',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-      background:var(--kcp-bg);
-      color:var(--kcp-text);
-      line-height:1.6;
-      min-height:100vh;
-      overflow-x:hidden;
-      position:relative;
-    }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:url("https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8") no-repeat center 45%;
-      background-size:600px auto;
-      opacity:0;
-      pointer-events:none;
-      z-index:0;
-    }
+        @keyframes kcpGrad {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    header#kcpHeader{
-      position:sticky; top:0; z-index:1001; background:transparent;
-      transition:transform .25s ease, opacity .2s ease;
-      will-change:transform,opacity;
-    }
-    header#kcpHeader.is-hidden{transform:translateY(-120%);opacity:0;pointer-events:none}
-    .header-inner{
-      max-width:1200px; margin:0 auto; padding:16px 28px;
-      display:flex; align-items:center; position:relative; gap:20px;
-    }
-    .brand{display:inline-flex;align-items:center;flex:0 0 auto}
-    .brand img{height:150px;object-fit:contain;transition:transform .3s ease}
-    .brand img:hover{transform:scale(1.04)}
+        .animate-kcp-gradient {
+            background: var(--kcp-gradient);
+            background-size: 200% 200%;
+            animation: kcpGrad 6s ease infinite;
+        }
 
-    .title-pill{
-      position:absolute; left:50%; transform:translateX(-50%);
-      display:inline-flex; align-items:center; gap:12px;
-      padding:14px 28px; border-radius:16px;
-      background:var(--kcp-gradient); background-size:200% 200%;
-      animation:kcpGrad 6s ease infinite;
-      color:#fff; font-weight:800; font-size:clamp(18px,2.6vw,28px);
-      letter-spacing:.2px; line-height:1.2; white-space:nowrap;
-      box-shadow:0 8px 24px rgba(0,0,0,.15);
-    }
-    .title-icon{font-size:clamp(24px,3.2vw,36px); line-height:1; filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}
+        .glass-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
 
-    @keyframes kcpGrad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        .modern-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
 
-    main{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1}
-    .row{display:flex;gap:30px;flex-wrap:wrap;justify-content:center}
-    .column{flex:1;min-width:300px}
-    .column h2{
-      text-align:center;margin-bottom:20px;font-size:1.6rem;font-weight:700;
-      color:var(--kcp-indigo);border-bottom:3px solid var(--kcp-blue);padding-bottom:6px
-    }
-    .card-row{display:flex;flex-direction:column;gap:20px}
+        .modern-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
 
-    .card{
-      position:relative;background:#fff;border:1px solid var(--kcp-border);
-      border-radius:14px;padding:20px;text-align:center;cursor:pointer;
-      box-shadow:0 4px 12px rgba(0,0,0,.08);transition:transform .3s ease,box-shadow .3s ease;
-      overflow:hidden;z-index:1;
-    }
-    .card::before{
-      content:"";position:absolute;inset:0;background:var(--kcp-gradient);
-      background-size:200% 200%;animation:kcpGrad 8s ease infinite;
-      opacity:0;transform:scale(1.05);transition:opacity .35s ease,transform .35s ease;z-index:0
-    }
-    .card:hover{transform:translateY(-6px);box-shadow:0 10px 28px rgba(0,0,0,.15)}
-    .card:hover::before{opacity:1;transform:scale(1)}
-    .card a{position:relative;z-index:1;display:block;text-decoration:none;color:var(--kcp-text);font-size:1.1rem;font-weight:600;transition:color .3s ease}
-    .card:hover a{color:#fff}
+        .icon-container {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.5);
+            color: #475569;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.8);
+        }
 
-    footer{text-align:center;margin-top:50px;padding:20px;font-size:.9rem;color:#6b7280;position:relative;z-index:1}
-    footer::before{content:"";display:block;width:80px;height:3px;margin:0 auto 15px;background:var(--kcp-blue);border-radius:10px}
-    .note{margin-top:8px;font-size:.85rem;color:#9ca3af;font-style:italic}
+        .modern-card:hover .icon-container {
+            background: #0f172a;
+            color: white;
+        }
 
-    @media (max-width:720px){
-      .header-inner{padding:12px 16px;gap:12px}
-      .brand img{height:96px}
-      .title-pill{padding:10px 14px;font-size:16px;white-space:normal;text-align:center}
-    }
-    @media (max-width:480px){.brand img{height:76px}}
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            opacity: 0.8;
+        }
 
-    @media (prefers-reduced-motion:reduce){
-      header#kcpHeader,.card,.card::before{animation:none;transition:none}
-    }
-  </style>
+        .category-title::after {
+            content: "";
+            height: 1px;
+            flex-grow: 1;
+            background: #e2e8f0;
+        }
+
+        .header-hidden {
+            transform: translateY(-100%);
+        }
+
+        /* Loading Spinner Animation */
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            width: 1.125rem;
+            height: 1.125rem;
+            border: 2px solid rgba(37, 99, 235, 0.1);
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spinner 0.6s linear infinite;
+        }
+    </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header id="kcpHeader">
-    <div class="header-inner">
-      <a class="brand" href="https://kanooz.com/" target="_blank" aria-label="Kanooz Home">
-        <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Kanooz Logo" />
-      </a>
 
-      <h1 class="title-pill" role="heading" aria-level="1">
-        <span class="title-icon" aria-hidden="true"></span>
-        <span class="title-text">CENTRAL PLANNING</span>
-      </h1>
+    <!-- Background Elements -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.05] flex items-center justify-center">
+        <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Watermark" class="w-[600px] max-w-[80vw] pointer-events-none">
     </div>
-  </header>
 
-  <!-- Content -->
-  <main>
-    <div class="row">
-      <div class="column">
-        <h2>Manpower</h2>
-        <div class="card-row">
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Manpower%20%26%20ID%20Tracking.xlsx?d=w79d9dbbc16c74caf9c3227f972d4cfc7&csf=1&web=1&e=WQQNsL">Manpower Tracking</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/IQBWKYuA4bGXRpnPzxScK7VyAfAuQccarzJTcPEKL-L93AU?e=zWRCms">Dispatch & Allocation</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/QIWA%20Visa%20Tracker.xlsx?d=w7a27e5f66516485d9b2829e61ffd21d5&csf=1&web=1&e=sJf0kN">QIWA Visa Tracker </a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/MP%20Deployment%20%26%20Shortage.xlsx?d=w6356b06acd5a4020a70723a0ce231ab9&csf=1&web=1&e=O9DZ0w">Manpower Deployment Shortage</a></div>
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Montly%20MH%20Tracking.xlsx?d=w5d29dff755264096b007052cbc2678b2&e=4%3ad538bf07216a4024a1a93c1d26060fef&sharingv2=true&fromShare=true&at=9">Monthly MH Tracking</a></div>
+    <!-- Header -->
+    <header id="mainHeader" class="glass-header">
+        <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
+            <a href="https://kanooz.com/" target="_blank" class="flex items-center gap-4 group">
+                <img src="https://kanooz.com/assets/images/logo.png" alt="Kanooz Logo" class="h-10 md:h-14 transition-transform group-hover:scale-105">
+            </a>
+
+            <div class="absolute left-1/2 -translate-x-1/2">
+                <div class="animate-kcp-gradient p-[1px] rounded-2xl shadow-xl">
+                    <div class="bg-white/10 backdrop-blur-xl px-10 py-3 rounded-[15px] border border-white/20 text-center">
+                        <h1 class="text-white font-extrabold text-xl tracking-tight uppercase whitespace-nowrap">
+                            Central Planning Portal
+                        </h1>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </header>
 
-      <div class="column">
-        <h2>Equipment</h2>
-        <div class="card-row">
-          <div class="card"><a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/EenPC12jG7tOt7MREApRGgkBanM56BSfcE9w93InHWIIHw?e=MrPOxw&amp;xsdata=MDV8MDJ8bmF2ZWRAa2Fub296LmNvbXxlMjMzNGJlMmQ1Y2M0MmEyYjJiOTA4ZGRhZDc1NDA1M3wxMzZiYmNmZmFhMjg0MDg0OTdiM2IwNDQyOTU5NzAyMnwwfDB8NjM4">Equipment Tracking</a></div>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12 relative z-10">
+        
+        <!-- Shorter Welcome Section -->
+        <section class="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">
+                    Resource <span class="text-blue-600">Management</span>
+                </h2>
+                <p class="text-slate-500 text-base max-w-lg leading-snug font-medium">
+                    Real-time tracking for manpower and equipment assets.
+                </p>
+            </div>
+            <div class="flex items-center gap-4 bg-white/40 backdrop-blur-md p-3 rounded-2xl border border-white/40 shadow-sm">
+                <div class="w-10 h-10 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <div class="pr-2">
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Security</span>
+                    <span class="text-xs font-bold text-slate-900">Authorized Access Only</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            
+            <!-- Category: Manpower -->
+            <div class="space-y-6">
+                <h3 class="category-title">
+                    <i data-lucide="users" class="text-blue-600 w-5 h-5"></i>
+                    <span>Manpower</span>
+                </h3>
+                <div class="flex flex-col gap-4">
+                    <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Manpower%20%26%20ID%20Tracking.xlsx?d=w79d9dbbc16c74caf9c3227f972d4cfc7&csf=1&web=1&e=WQQNsL" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="user-check"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Manpower Tracking</span>
+                            <span class="block text-xs text-slate-400 font-medium">Overall Manpower Summary</span>
+                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                        </div>
+                    </a>
+                    <a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/IQBWKYuA4bGXRpnPzxScK7VyAfAuQccarzJTcPEKL-L93AU?e=zWRCms" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="clipboard-list"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Dispatch & Allocation</span>
+                            <span class="block text-xs text-slate-400 font-medium">Daily Deployment Logs</span>
+                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                        </div>
+                    </a>
+                    <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/QIWA%20Visa%20Tracker.xlsx?d=w7a27e5f66516485d9b2829e61ffd21d5&csf=1&web=1&e=sJf0kN" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="credit-card"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">QIWA Visa Tracker</span>
+                            <span class="block text-xs text-slate-400 font-medium">Overseas Mobilization</span>
+                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                        </div>
+                    </a>
+                    <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/MP%20Deployment%20%26%20Shortage.xlsx?d=w6356b06acd5a4020a70723a0ce231ab9&csf=1&web=1&e=O9DZ0w" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="bar-chart-3"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Manpower Demand & Shortage</span>
+                            <span class="block text-xs text-slate-400 font-medium">Project Requirement Tracking</span>
+                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                        </div>
+                    </a>
+                    <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Montly%20MH%20Tracking.xlsx?d=w5d29dff755264096b007052cbc2678b2&e=4%3ad538bf07216a4024a1a93c1d26060fef&sharingv2=true&fromShare=true&at=9" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="calendar-days"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Monthly MH Tracking</span>
+                            <span class="block text-xs text-slate-400 font-medium">Project wise Manhours</span>
+                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category: Equipment -->
+            <div class="space-y-6">
+                <h3 class="category-title">
+                    <i data-lucide="truck" class="text-blue-600 w-5 h-5"></i>
+                    <span>Equipment</span>
+                </h3>
+                <div class="flex flex-col gap-4">
+                    <a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/EenPC12jG7tOt7MREApRGgkBanM56BSfcE9w93InHWIIHw?e=MrPOxw&xsdata=MDV8MDJ8bmF2ZWRAa2Fub296LmNvbXxlMjMzNGJlMmQ1Y2M0MmEyYjJiOTA4ZGRhZDc1NDA1M3wxMzZiYmNmZmFhMjg0MDg0OTdiM2IwNDQyOTU5NzAyMnwwfDB8NjM4" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="settings"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Equipment Tracking</span>
+                            <span class="block text-xs text-slate-400 font-medium">Overall Equipment & Vehicle Tracking</span>
+                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category: Others -->
+            <div class="space-y-6">
+                <h3 class="category-title">
+                    <i data-lucide="layout" class="text-blue-600 w-5 h-5"></i>
+                    <span>Systems</span>
+                </h3>
+                <div class="flex flex-col gap-4">
+                    <a href="https://kanoozcp.github.io/dashboard/" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="layout-dashboard"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Dashboard Report</span>
+                            <span class="block text-xs text-slate-400 font-medium">High Level Report for Management</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
         </div>
-      </div>
+    </main>
 
-      <div class="column">
-        <h2>Others</h2>
-        <div class="card-row">
-          <div class="card"><a href="https://kanoozcp.github.io/dashboard/">Dashboard Report</a></div>
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-slate-200 bg-white/40 backdrop-blur-3xl relative z-10 w-full px-4 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="space-y-4">
+                        <h4 class="text-slate-900 font-black text-lg tracking-tight uppercase">
+                            Contact Information
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 group cursor-default">
+                                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-lg shadow-slate-900/10 transition-transform group-hover:scale-110">
+                                    <i data-lucide="map-pin" class="w-[18px] h-[18px]"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-slate-900 font-bold text-sm leading-none mb-1">Kanooz Contracting Est</p>
+                                    <p class="text-slate-500 text-xs font-medium">Dammam, Kingdom of Saudi Arabia</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 group">
+                                <a href="mailto:Info@kanooz.com" class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center transition-all hover:bg-blue-600 hover:text-white">
+                                    <i data-lucide="mail" class="w-[18px] h-[18px]"></i>
+                                </a>
+                                <div class="text-left">
+                                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Email Us</p>
+                                    <a href="mailto:Info@kanooz.com" class="text-slate-900 font-bold text-sm hover:text-blue-600 transition-colors">Info@kanooz.com</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 group">
+                                <a href="tel:+96692000043" class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center transition-all hover:bg-emerald-500 hover:text-white">
+                                    <i data-lucide="phone" class="w-[18px] h-[18px]"></i>
+                                </a>
+                                <div class="text-left">
+                                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Call Support</p>
+                                    <a href="tel:+96692000043" class="text-slate-900 font-bold text-sm hover:text-emerald-600 transition-colors">+966 92000043</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 lg:text-right flex flex-col pt-2">
+                    <div class="space-y-4">
+                        <img src="https://kanooz.com/assets/images/logo.png" alt="Kanooz" class="h-10 ml-auto opacity-50 grayscale hover:grayscale-0 transition-all">
+                        <div class="space-y-1">
+                            <p class="text-slate-900 font-black text-xl tracking-tighter uppercase">
+                                Central <span class="text-blue-600">Planning</span>
+                            </p>
+                            <p class="text-slate-500 text-sm max-w-md ml-auto leading-relaxed">
+                                Dedicated to industrial excellence through Project progress tracking, strategic resource allocation, 
+				global manpower mobilization and comprehensive equipment tracking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-slate-200/50 flex flex-col items-center justify-center text-center gap-4">
+                <p class="text-slate-400 text-xs font-medium">
+                    © 2026 Kanooz – Central Planning. All Rights Reserved.
+                </p>
+                <div class="flex items-center justify-center">
+                    <span class="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] px-3 py-1 border border-slate-200 rounded-full cursor-default">
+                        System Version 1.0.0
+                    </span>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </footer>
 
-  <footer>
-    © 2026 Kanooz – Central Planning
-    <div class="note">Note: The above links will only work if you have a Valid Kanooz login ID.</div>
-  </footer>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-  <!-- Header hide on scroll down, show on scroll up -->
-  <script>
-    (function(){
-      const header = document.getElementById('kcpHeader');
-      let lastY = window.scrollY || 0;
-      const THRESHOLD = 6;
-      addEventListener('scroll', () => {
-        const y = window.scrollY || 0;
-        if (y - lastY > THRESHOLD) header.classList.add('is-hidden');
-        else if (lastY - y > THRESHOLD || y < 10) header.classList.remove('is-hidden');
-        lastY = y;
-      }, { passive:true });
-    })();
-  </script>
+        // Card Loading Simulation
+        const cards = document.querySelectorAll('.modern-card');
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                const iconContainer = card.querySelector('.icon-container');
+                const originalContent = iconContainer.innerHTML;
+                
+                // Show Spinner
+                iconContainer.innerHTML = '<div class="spinner"></div>';
+                
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    iconContainer.innerHTML = originalContent;
+                    lucide.createIcons(); // Re-initialize icons
+                }, 2000);
+            });
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        const header = document.getElementById('mainHeader');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll <= 0) {
+                header.classList.remove('header-hidden');
+                return;
+            }
+
+            if (currentScroll > lastScroll && !header.classList.contains('header-hidden')) {
+                // Scroll down
+                header.classList.add('header-hidden');
+            } else if (currentScroll < lastScroll && header.classList.contains('header-hidden')) {
+                // Scroll up
+                header.classList.remove('header-hidden');
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
