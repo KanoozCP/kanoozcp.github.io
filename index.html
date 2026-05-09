@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Central Planning Portal - Kanooz</title>
     
-    <!-- Modern Font Inter & Poppins -->
+    <!-- Modern Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
@@ -29,7 +29,7 @@
             min-height: 100vh;
         }
 
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             font-family: 'Poppins', sans-serif;
         }
 
@@ -119,7 +119,33 @@
             transform: translateY(-100%);
         }
 
-        /* Loading Spinner Animation */
+        /* Badge Styling */
+        .professional-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.375rem;
+            margin-top: 0.375rem;
+            font-size: 0.5625rem; /* 9px */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            border-width: 1px;
+        }
+
+        .badge-admin {
+            background-color: #fef2f2;
+            border-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-limited {
+            background-color: #fffbeb;
+            border-color: #fef3c7;
+            color: #d97706;
+        }
+
         @keyframes spinner {
             to { transform: rotate(360deg); }
         }
@@ -137,7 +163,7 @@
 
     <!-- Background Elements -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.05] flex items-center justify-center">
-        <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Watermark" class="w-[600px] max-w-[80vw] pointer-events-none">
+        <img src="https://lh3.googleusercontent.com/d/1oQr4RoR9ON5vK6U_oIN2hW0HdnpEloO8" alt="Watermark" class="w-[600px] max-w-[80vw] select-none">
     </div>
 
     <!-- Header -->
@@ -149,8 +175,8 @@
 
             <div class="absolute left-1/2 -translate-x-1/2">
                 <div class="animate-kcp-gradient p-[1px] rounded-2xl shadow-xl">
-                    <div class="bg-white/10 backdrop-blur-xl px-10 py-3 rounded-[15px] border border-white/20 text-center">
-                        <h1 class="text-white font-extrabold text-xl tracking-tight uppercase whitespace-nowrap">
+                    <div class="bg-white/10 backdrop-blur-xl px-4 md:px-10 py-3 rounded-[15px] border border-white/20 text-center">
+                        <h1 class="text-white font-extrabold text-sm md:text-xl tracking-tight uppercase whitespace-nowrap">
                             Central Planning Portal
                         </h1>
                     </div>
@@ -160,9 +186,9 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-12 relative z-10">
+    <main class="max-w-7xl mx-auto px-6 py-8 md:py-12 relative z-10">
         
-        <!-- Shorter Welcome Section -->
+        <!-- Welcome Section -->
         <section class="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div>
                 <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">
@@ -172,7 +198,7 @@
                     Real-time tracking for manpower and equipment assets.
                 </p>
             </div>
-            <div class="flex items-center gap-4 bg-white/40 backdrop-blur-md p-3 rounded-2xl border border-white/40 shadow-sm">
+            <div class="flex items-center gap-4 bg-white/40 backdrop-blur-md p-3 rounded-2xl border border-white/40 shadow-sm self-start md:self-center">
                 <div class="w-10 h-10 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center">
                     <i data-lucide="shield-check"></i>
                 </div>
@@ -184,7 +210,7 @@
         </section>
 
         <!-- Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             
             <!-- Category: Manpower -->
             <div class="space-y-6">
@@ -198,7 +224,10 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Manpower Tracking</span>
                             <span class="block text-xs text-slate-400 font-medium">Overall Manpower Summary</span>
-                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                            <div class="professional-badge badge-admin">
+                                <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                                <span>Admin Access Only</span>
+                            </div>
                         </div>
                     </a>
                     <a href="https://kanooz365-my.sharepoint.com/:x:/g/personal/naved_kanooz_com/IQBWKYuA4bGXRpnPzxScK7VyAfAuQccarzJTcPEKL-L93AU?e=zWRCms" class="modern-card" target="_blank">
@@ -206,7 +235,10 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Dispatch & Allocation</span>
                             <span class="block text-xs text-slate-400 font-medium">Daily Deployment Logs</span>
-                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                            <div class="professional-badge badge-admin">
+                                <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                                <span>Admin Access Only</span>
+                            </div>
                         </div>
                     </a>
                     <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/QIWA%20Visa%20Tracker.xlsx?d=w7a27e5f66516485d9b2829e61ffd21d5&csf=1&web=1&e=sJf0kN" class="modern-card" target="_blank">
@@ -214,7 +246,10 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">QIWA Visa Tracker</span>
                             <span class="block text-xs text-slate-400 font-medium">Overseas Mobilization</span>
-                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                            <div class="professional-badge badge-admin">
+                                <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                                <span>Admin Access Only</span>
+                            </div>
                         </div>
                     </a>
                     <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/MP%20Deployment%20%26%20Shortage.xlsx?d=w6356b06acd5a4020a70723a0ce231ab9&csf=1&web=1&e=O9DZ0w" class="modern-card" target="_blank">
@@ -222,7 +257,10 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Manpower Demand & Shortage</span>
                             <span class="block text-xs text-slate-400 font-medium">Project Requirement Tracking</span>
-                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                            <div class="professional-badge badge-admin">
+                                <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                                <span>Admin Access Only</span>
+                            </div>
                         </div>
                     </a>
                     <a href="https://kanooz365-my.sharepoint.com/:x:/r/personal/naved_kanooz_com/Documents/Online%20Files/Montly%20MH%20Tracking.xlsx?d=w5d29dff755264096b007052cbc2678b2&e=4%3ad538bf07216a4024a1a93c1d26060fef&sharingv2=true&fromShare=true&at=9" class="modern-card" target="_blank">
@@ -230,7 +268,10 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Monthly MH Tracking</span>
                             <span class="block text-xs text-slate-400 font-medium">Project wise Manhours</span>
-                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Admin Access Only)</span>
+                            <div class="professional-badge badge-admin">
+                                <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                                <span>Admin Access Only</span>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -247,14 +288,17 @@
                         <div class="icon-container"><i data-lucide="settings"></i></div>
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Equipment Tracking</span>
-                            <span class="block text-xs text-slate-400 font-medium">Overall Equipment & Vehicle Tracking</span>
-                            <span class="block text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">(Limited Access)</span>
+                            <span class="block text-xs text-slate-400 font-medium">Overall Equipment Tracking</span>
+                            <div class="professional-badge badge-limited">
+                                <i data-lucide="alert-circle" class="w-2.5 h-2.5"></i>
+                                <span>Limited Access</span>
+                            </div>
                         </div>
                     </a>
                 </div>
             </div>
 
-            <!-- Category: Others -->
+            <!-- Category: Systems -->
             <div class="space-y-6">
                 <h3 class="category-title">
                     <i data-lucide="layout" class="text-blue-600 w-5 h-5"></i>
@@ -268,80 +312,54 @@
                             <span class="block text-xs text-slate-400 font-medium">High Level Report for Management</span>
                         </div>
                     </a>
+                    <!-- New Feedback & Complaints Item -->
+                    <a href="https://kanoozcp.github.io/feedback/" class="modern-card" target="_blank">
+                        <div class="icon-container"><i data-lucide="message-square"></i></div>
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5">Feedback & Complaints</span>
+                            <span class="block text-xs text-slate-400 font-medium">Direct support & communication</span>
+                        </div>
+                    </a>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-20 border-t border-slate-200 bg-white/40 backdrop-blur-3xl relative z-10 w-full px-4 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 py-16">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <!-- Reduced Footer -->
+    <footer class="mt-8 border-t border-slate-200/60 bg-white/30 backdrop-blur-3xl relative z-10 w-full">
+        <div class="max-w-7xl mx-auto px-6 py-4 md:py-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="space-y-4">
-                        <h4 class="text-slate-900 font-black text-lg tracking-tight uppercase">
-                            Contact Information
-                        </h4>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4 group cursor-default">
-                                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-lg shadow-slate-900/10 transition-transform group-hover:scale-110">
-                                    <i data-lucide="map-pin" class="w-[18px] h-[18px]"></i>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-slate-900 font-bold text-sm leading-none mb-1">Kanooz Contracting Est</p>
-                                    <p class="text-slate-500 text-xs font-medium">Dammam, Kingdom of Saudi Arabia</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-4 group">
-                                <a href="mailto:Info@kanooz.com" class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center transition-all hover:bg-blue-600 hover:text-white">
-                                    <i data-lucide="mail" class="w-[18px] h-[18px]"></i>
-                                </a>
-                                <div class="text-left">
-                                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Email Us</p>
-                                    <a href="mailto:Info@kanooz.com" class="text-slate-900 font-bold text-sm hover:text-blue-600 transition-colors">Info@kanooz.com</a>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-4 group">
-                                <a href="tel:+96692000043" class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center transition-all hover:bg-emerald-500 hover:text-white">
-                                    <i data-lucide="phone" class="w-[18px] h-[18px]"></i>
-                                </a>
-                                <div class="text-left">
-                                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Call Support</p>
-                                    <a href="tel:+96692000043" class="text-slate-900 font-bold text-sm hover:text-emerald-600 transition-colors">+966 92000043</a>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Contact Icons Row -->
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3">
+                    <div class="flex items-center gap-2 group cursor-default">
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                        <span class="text-slate-600 font-medium text-[11px]">Dammam, KSA</span>
                     </div>
+
+                    <a href="mailto:Info@kanooz.com" class="flex items-center gap-2 group">
+                        <i data-lucide="mail" class="w-3.5 h-3.5 text-blue-500"></i>
+                        <span class="text-slate-600 font-medium text-[11px] group-hover:text-blue-600 transition-colors">Info@kanooz.com</span>
+                    </a>
+
+                    <a href="tel:+96692000043" class="flex items-center gap-2 group">
+                        <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-500"></i>
+                        <span class="text-slate-600 font-medium text-[11px] group-hover:text-emerald-600 transition-colors">+966 92000043</span>
+                    </a>
                 </div>
 
-                <div class="lg:col-span-7 lg:text-right flex flex-col pt-2">
-                    <div class="space-y-4">
-                        <img src="https://kanooz.com/assets/images/logo.png" alt="Kanooz" class="h-10 ml-auto opacity-50 grayscale hover:grayscale-0 transition-all">
-                        <div class="space-y-1">
-                            <p class="text-slate-900 font-black text-xl tracking-tighter uppercase">
-                                Central <span class="text-blue-600">Planning</span>
-                            </p>
-                            <p class="text-slate-500 text-sm max-w-md ml-auto leading-relaxed">
-                                Dedicated to industrial excellence through Project progress tracking, strategic resource allocation, 
-				global manpower mobilization and comprehensive equipment tracking.
-                            </p>
-                        </div>
+                <!-- Copyright & Logo -->
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <p class="text-slate-400 text-[10px] font-medium select-none">
+                            © 2026 Kanooz Central Planning.
+                        </p>
+                        <span class="text-[8px] font-bold text-slate-300 uppercase tracking-[0.2em] px-2 py-0.5 border border-slate-200 rounded-full select-none">
+                            v1.0.0
+                        </span>
                     </div>
-                </div>
-            </div>
-
-            <div class="mt-16 pt-8 border-t border-slate-200/50 flex flex-col items-center justify-center text-center gap-4">
-                <p class="text-slate-400 text-xs font-medium">
-                    © 2026 Kanooz – Central Planning. All Rights Reserved.
-                </p>
-                <div class="flex items-center justify-center">
-                    <span class="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] px-3 py-1 border border-slate-200 rounded-full cursor-default">
-                        System Version 1.0.0
-                    </span>
+                    <img src="https://kanooz.com/assets/images/logo.png" alt="Kanooz" class="h-8 opacity-40 grayscale hover:grayscale-0 transition-opacity">
                 </div>
             </div>
         </div>
@@ -356,14 +374,14 @@
         cards.forEach(card => {
             card.addEventListener('click', (e) => {
                 const iconContainer = card.querySelector('.icon-container');
-                const originalContent = iconContainer.innerHTML;
+                const originalIcon = iconContainer.innerHTML;
                 
                 // Show Spinner
                 iconContainer.innerHTML = '<div class="spinner"></div>';
                 
                 // Revert after 2 seconds
                 setTimeout(() => {
-                    iconContainer.innerHTML = originalContent;
+                    iconContainer.innerHTML = originalIcon;
                     lucide.createIcons(); // Re-initialize icons
                 }, 2000);
             });
