@@ -95,6 +95,11 @@
             color: white;
         }
 
+        .icon-container.hse-icon, .modern-card:hover .icon-container.hse-icon {
+            background: #dc2626 !important;
+            color: white !important;
+        }
+
         .category-title {
             display: flex;
             align-items: center;
@@ -144,6 +149,12 @@
             background-color: #fffbeb;
             border-color: #fef3c7;
             color: #d97706;
+        }
+
+        .badge-all {
+            background-color: #ecfdf5;
+            border-color: #d1fae5;
+            color: #059669; /* emerald-600 */
         }
 
         @keyframes spinner {
@@ -310,6 +321,10 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Dashboard Report</span>
                             <span class="block text-xs text-slate-400 font-medium">High Level Report for Management</span>
+                            <div class="professional-badge badge-limited">
+                                <i data-lucide="alert-circle" style="width: 10px; height: 10px;"></i>
+                                <span style="line-height: 1;">Limited Access</span>
+                            </div>
                         </div>
                     </a>
                     <!-- Department Update -->
@@ -318,22 +333,36 @@
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Department Update</span>
                             <span class="block text-xs text-slate-400 font-medium">Project Status, Invoices etc.</span>
+                            <div class="professional-badge badge-limited">
+                                <i data-lucide="alert-circle" style="width: 10px; height: 10px;"></i>
+                                <span style="line-height: 1;">Limited Access</span>
+                            </div>
                         </div>
                     </a>
-                    <!-- Safety Observation -->
-                    <a href="https://kanoozcp.github.io/safety/" class="modern-card" target="_blank">
-                        <div class="icon-container"><i data-lucide="message-square"></i></div>
-                        <div>
-                            <span class="block text-slate-900 font-bold mb-0.5">Report Safety Observation</span>
-                            <span class="block text-xs text-slate-400 font-medium">Report Unsafe Act, Near Miss or LTI</span>
-                        </div>
-                     </a>
-                    <!-- Standard Formats -->
-                    <a href="https://kanoozcp.github.io/stdformat/" class="modern-card" target="_blank">
+                    <!-- Standard Format -->
+                    <a href="./standard_format_standalone.html" class="modern-card">
                         <div class="icon-container"><i data-lucide="download"></i></div>
                         <div>
-                            <span class="block text-slate-900 font-bold mb-0.5">Standard Formats</span>
-                            <span class="block text-xs text-slate-400 font-medium">Download format for Manpower, Equipment & Others</span>
+                            <span class="block text-slate-900 font-bold mb-0.5">Standard Format</span>
+                            <span class="block text-xs text-slate-400 font-medium">Download format for MP, EQ & Others</span>
+                            <div class="professional-badge badge-all">
+                                <span style="line-height: 1;">All</span>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Report Safety Observation - Perfectly Aligned Clean Style -->
+                    <a href="https://kanoozcp.github.io/feedback/" class="modern-card group focus:outline-none" style="outline: none; border-color: rgba(239, 68, 68, 0.25); border-width: 1px; background-color: rgba(254, 242, 242, 0.55);" target="_blank">
+                        <!-- Red flashing icon, no red/blue pulsing dots -->
+                        <div class="icon-container hse-icon shrink-0 animate-pulse" style="background-color: #dc2626 !important; color: white !important; border: 1px solid #b91c1c;">
+                            <i data-lucide="shield-alert" style="width: 20px; height: 20px; color: white !important;"></i>
+                        </div>
+
+                        <div>
+                            <span class="block text-slate-900 font-bold mb-0.5" style="color: #b91c1c !important;">Report Safety Observation</span>
+                            <span class="block text-xs text-slate-400 font-medium" style="display: block; margin-top: 2px;">Report Unsafe Act, Near Miss or LTI</span>
+                            <div class="professional-badge badge-admin">
+                                <span style="line-height: 1; font-weight: 800; animation: pulse 1.5s infinite;">Critical HSE Field</span>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -342,8 +371,8 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 border-t border-slate-200/60 bg-white/30 backdrop-blur-3xl relative z-10 w-full">
+    <!-- Reduced Footer -->
+    <footer class="mt-8 border-t border-slate-200/60 bg-white/30 backdrop-blur-3xl relative z-10 w-full">
         <div class="max-w-7xl mx-auto px-6 py-4 md:py-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 
