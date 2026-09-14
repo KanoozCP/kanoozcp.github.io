@@ -6,7 +6,9 @@
     <title>Central Planning Portal - Kanooz</title>
     
     <!-- Modern Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -16,21 +18,22 @@
 
     <style>
         :root {
-            --kcp-indigo: #1e3a8a;
-            --kcp-blue: #2563eb;
-            --kcp-orange: #f97316;
-            --kcp-gradient: linear-gradient(135deg, #1e3a8a, #2563eb, #f97316);
+            --kcp-navy: #2A3478;
+            --kcp-indigo: #2A3478;
+            --kcp-blue: #2A3478;
+            --kcp-terracotta: #C44128;
+            --kcp-gradient: linear-gradient(135deg, #2A3478 0%, #1c245c 45%, #C44128 100%);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
             background-color: #f8fafc;
             color: #0f172a;
             min-height: 100vh;
         }
 
         h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
         }
 
         @keyframes kcpGrad {
@@ -57,12 +60,12 @@
         }
 
         .modern-card {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(42, 52, 120, 0.1);
             border-radius: 1.25rem;
             padding: 1.25rem;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -71,10 +74,10 @@
         }
 
         .modern-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.6);
-            border-color: rgba(37, 99, 235, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(42, 52, 120, 0.1), 0 8px 10px -6px rgba(196, 65, 40, 0.05);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(196, 65, 40, 0.35);
         }
 
         .icon-container {
@@ -84,20 +87,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.5);
-            color: #475569;
+            background: rgba(42, 52, 120, 0.06);
+            color: #2A3478;
+            border: 1px solid rgba(42, 52, 120, 0.1);
             transition: all 0.3s ease;
             box-shadow: inset 0 1px 1px rgba(255,255,255,0.8);
         }
 
         .modern-card:hover .icon-container {
-            background: #0f172a;
+            background: #2A3478;
             color: white;
+            border-color: #2A3478;
         }
 
         .icon-container.hse-icon, .modern-card:hover .icon-container.hse-icon {
-            background: #dc2626 !important;
+            background: #C44128 !important;
             color: white !important;
+            border: 1px solid #a83620;
         }
 
         .category-title {
@@ -105,19 +111,18 @@
             align-items: center;
             gap: 0.75rem;
             font-size: 1rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-weight: 800;
+            color: #2A3478;
             margin-bottom: 1.25rem;
             text-transform: uppercase;
-            letter-spacing: 0.025em;
-            opacity: 0.8;
+            letter-spacing: 0.04em;
         }
 
         .category-title::after {
             content: "";
             height: 1px;
             flex-grow: 1;
-            background: #e2e8f0;
+            background: rgba(42, 52, 120, 0.15);
         }
 
         .header-hidden {
@@ -142,7 +147,7 @@
         .badge-admin {
             background-color: #fef2f2;
             border-color: #fee2e2;
-            color: #dc2626;
+            color: #C44128;
         }
 
         .badge-limited {
@@ -163,8 +168,8 @@
         .spinner {
             width: 1.125rem;
             height: 1.125rem;
-            border: 2px solid rgba(37, 99, 235, 0.1);
-            border-top-color: #2563eb;
+            border: 2px solid rgba(42, 52, 120, 0.12);
+            border-top-color: #C44128;
             border-radius: 50%;
             animation: spinner 0.6s linear infinite;
         }
@@ -180,8 +185,8 @@
     <!-- Header -->
     <header id="mainHeader" class="glass-header">
         <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
-            <a href="https://kanooz.com/" target="_blank" class="flex items-center gap-4 group">
-                <img src="https://kanooz.com/wp-content/uploads/2026/05/KANOOZ-LOGO-2026-transparent-color-2048x331.avif" alt="Kanooz Logo" class="h-10 md:h-14 transition-transform group-hover:scale-105">
+            <a href="https://kanooz.com/" target="_blank" class="flex items-center gap-4 group shrink-0" title="Kanooz">
+                <img src="https://kanooz.com/wp-content/uploads/2026/05/KANOOZ-LOGO-2026-transparent-color-2048x331.avif" alt="Kanooz Logo" class="h-8 sm:h-10 md:h-11 w-auto max-w-[170px] sm:max-w-[220px] md:max-w-[270px] object-contain transition-transform group-hover:scale-105 drop-shadow-sm">
             </a>
 
             <div class="absolute left-1/2 -translate-x-1/2">
@@ -203,14 +208,14 @@
         <section class="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div>
                 <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">
-                    Resource <span class="text-blue-600">Planning</span>
+                    Resource <span style="color: #C44128;">Planning</span>
                 </h2>
                 <p class="text-slate-500 text-base max-w-lg leading-snug font-medium">
                     Real-time tracking for Manpower, Equipment & Projects.
                 </p>
             </div>
-            <div class="flex items-center gap-4 bg-white/40 backdrop-blur-md p-3 rounded-2xl border border-white/40 shadow-sm self-start md:self-center">
-                <div class="w-10 h-10 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center">
+            <div class="flex items-center gap-4 bg-white/60 backdrop-blur-md p-3 rounded-2xl border border-white/60 shadow-sm self-start md:self-center">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: rgba(42, 52, 120, 0.08); color: #2A3478;">
                     <i data-lucide="shield-check"></i>
                 </div>
                 <div class="pr-2">
@@ -226,7 +231,7 @@
             <!-- Category: Manpower -->
             <div class="space-y-6">
                 <h3 class="category-title">
-                    <i data-lucide="users" class="text-blue-600 w-5 h-5"></i>
+                    <i data-lucide="users" class="w-5 h-5" style="color: #2A3478;"></i>
                     <span>Manpower</span>
                 </h3>
                 <div class="flex flex-col gap-4">
@@ -291,7 +296,7 @@
             <!-- Category: Equipment -->
             <div class="space-y-6">
                 <h3 class="category-title">
-                    <i data-lucide="truck" class="text-blue-600 w-5 h-5"></i>
+                    <i data-lucide="truck" class="w-5 h-5" style="color: #2A3478;"></i>
                     <span>Equipment</span>
                 </h3>
                 <div class="flex flex-col gap-4">
@@ -312,11 +317,11 @@
             <!-- Category: Project & Others -->
             <div class="space-y-6">
                 <h3 class="category-title">
-                    <i data-lucide="layout" class="text-blue-600 w-5 h-5"></i>
+                    <i data-lucide="layout" class="w-5 h-5" style="color: #2A3478;"></i>
                     <span>Project & Others</span>
                 </h3>
                 <div class="flex flex-col gap-4">
-                    <a href="https://kanoozcp.github.io/dashboard/" class="modern-card" target="_blank">
+                    <a href="./dashboard.html" class="modern-card">
                         <div class="icon-container"><i data-lucide="layout-dashboard"></i></div>
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Dashboard Report</span>
@@ -328,7 +333,7 @@
                         </div>
                     </a>
                     <!-- Department Update -->
-                    <a href="https://kanoozcp.github.io/departmentupdate/" class="modern-card" target="_blank">
+                    <a href="./deptupdate.html" class="modern-card">
                         <div class="icon-container"><i data-lucide="clipboard-list"></i></div>
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Department Update</span>
@@ -340,28 +345,28 @@
                         </div>
                     </a>
                     <!-- Standard Format -->
-                    <a href="https://kanoozcp.github.io/stdformat/" class="modern-card">
+                    <a href="./std.html" class="modern-card">
                         <div class="icon-container"><i data-lucide="download"></i></div>
                         <div>
                             <span class="block text-slate-900 font-bold mb-0.5">Standard Format</span>
-                            <span class="block text-xs text-slate-400 font-medium">Download format for MP, EQ & Others</span>
+                            <span class="block text-xs text-slate-400 font-medium">Download format for MP Request, EQ Request & Others</span>
                             <div class="professional-badge badge-all">
-                                <span style="line-height: 1;">All</span>
+                                <span style="line-height: 1;">All Kanooz</span>
                             </div>
                         </div>
                     </a>
                     <!-- Report Safety Observation - Perfectly Aligned Clean Style -->
-                    <a href="https://kanoozcp.github.io/safety/" class="modern-card group focus:outline-none" style="outline: none; border-color: rgba(239, 68, 68, 0.25); border-width: 1px; background-color: rgba(254, 242, 242, 0.55);" target="_blank">
-                        <!-- Red flashing icon, no red/blue pulsing dots -->
-                        <div class="icon-container hse-icon shrink-0 animate-pulse" style="background-color: #dc2626 !important; color: white !important; border: 1px solid #b91c1c;">
+                    <a href="./safety.html" class="modern-card group focus:outline-none" style="outline: none; border-color: rgba(196, 65, 40, 0.25); border-width: 1px; background-color: rgba(254, 242, 242, 0.55);">
+                        <!-- Flashing icon -->
+                        <div class="icon-container hse-icon shrink-0 animate-pulse" style="background-color: #C44128 !important; color: white !important; border: 1px solid #a83620;">
                             <i data-lucide="shield-alert" style="width: 20px; height: 20px; color: white !important;"></i>
                         </div>
 
                         <div>
-                            <span class="block text-slate-900 font-bold mb-0.5" style="color: #b91c1c !important;">Report Safety Observation</span>
+                            <span class="block text-slate-900 font-bold mb-0.5" style="color: #C44128 !important;">Report Safety Observation</span>
                             <span class="block text-xs text-slate-400 font-medium" style="display: block; margin-top: 2px;">Report Unsafe Act, Near Miss or LTI</span>
                             <div class="professional-badge badge-admin">
-                                <span style="line-height: 1; font-weight: 800; animation: pulse 1.5s infinite;">HSE ACCESS ONLY</span>
+                                <span style="line-height: 1; font-weight: 800; animation: pulse 1.5s infinite;">HSE Access Only</span>
                             </div>
                         </div>
                     </a>
@@ -384,13 +389,13 @@
                     </div>
 
                     <a href="mailto:Info@kanooz.com" class="flex items-center gap-2 group">
-                        <i data-lucide="mail" class="w-3.5 h-3.5 text-blue-500"></i>
-                        <span class="text-slate-600 font-medium text-[11px] group-hover:text-blue-600 transition-colors">Info@kanooz.com</span>
+                        <i data-lucide="mail" class="w-3.5 h-3.5" style="color: #C44128;"></i>
+                        <span class="text-slate-600 font-medium text-[11px] group-hover:text-[#C44128] transition-colors">Info@kanooz.com</span>
                     </a>
 
                     <a href="tel:+96692000043" class="flex items-center gap-2 group">
-                        <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-500"></i>
-                        <span class="text-slate-600 font-medium text-[11px] group-hover:text-emerald-600 transition-colors">+966 92000043</span>
+                        <i data-lucide="phone" class="w-3.5 h-3.5" style="color: #2A3478;"></i>
+                        <span class="text-slate-600 font-medium text-[11px] group-hover:text-[#2A3478] transition-colors">+966 92000043</span>
                     </a>
                 </div>
 
@@ -401,11 +406,11 @@
                             © 2026 Kanooz Central Planning.
                         </p>
                         <span class="text-[8px] font-bold text-slate-300 uppercase tracking-[0.2em] px-2 py-0.5 border border-slate-200 rounded-full select-none">
-                            v1.0.0
+                            v2.0.0
                         </span>
                     </div>
-                    <a href="https://kanoozcp.github.io/kcpra/" target="_blank" rel="noopener noreferrer" class="inline-block">
-                        <img src="https://kanooz.com/wp-content/uploads/2026/05/Kanooz-Logo-transparent-png-2048x556.png" alt="Kanooz" class="h-8 opacity-40 grayscale hover:grayscale-0 transition-opacity">
+                    <a href="https://kanoozcp.github.io/kcpra/" target="_blank" rel="noopener noreferrer" class="inline-block" title="Kanooz">
+                        <img src="https://kanooz.com/wp-content/uploads/2026/05/KANOOZ-LOGO-2026-transparent-color-2048x331.avif" alt="Kanooz" class="h-6 md:h-7 w-auto max-w-[140px] md:max-w-[170px] object-contain opacity-75 hover:opacity-100 transition-opacity">
                     </a>
                 </div>
             </div>
